@@ -1384,7 +1384,8 @@ function GUI:Create()
 	frame.contentFrame.contentPhaseButton:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 	frame.contentFrame.contentPhaseButton:SetWidth(25)
 	frame.contentFrame.contentPhaseButton:SetHeight(25)
-	frame.contentFrame.contentPhaseButton:SetPoint("RIGHT", frame.contentFrame.modelButton, "LEFT", -5, 0)
+	-- anchored next to the class filter button below (created later),
+	-- previously it sat at the same point as the Sounds button and overlapped it
 	frame.contentFrame.contentPhaseButton:SetScript("OnClick", ContentPhaseButton_OnClick)
 	--frame.contentFrame.contentPhaseButton:SetScript("OnShow", ContentPhaseButton_OnShow)
 	--frame.contentFrame.contentPhaseButton:SetScript("OnEnter", ContentPhaseButton_OnEnter)
@@ -1470,6 +1471,8 @@ function GUI:Create()
 	frame.contentFrame.clasFilterButton:SetScript("OnLeave", ClassFilterButton_OnLeave)
 	frame.contentFrame.clasFilterButton.mainButton = true
 	--frame.contentFrame.clasFilterButton:Hide()
+
+	frame.contentFrame.contentPhaseButton:SetPoint("LEFT", frame.contentFrame.clasFilterButton, "RIGHT", 5, 0)
 
 	frame.contentFrame.clasFilterButton.texture = frame.contentFrame.clasFilterButton:CreateTexture(frameName.."-clasFilterButton-texture","ARTWORK")
 	frame.contentFrame.clasFilterButton.texture:SetAllPoints(frame.contentFrame.clasFilterButton)
