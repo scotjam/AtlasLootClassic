@@ -146,7 +146,14 @@ end
 if C_AddOns then
 	def("GetAddOnMetadata",    C_AddOns.GetAddOnMetadata)
 	def("GetAddOnInfo",        C_AddOns.GetAddOnInfo)
-	def("GetAddOnEnableState", C_AddOns.GetAddOnEnableState)
+	if _G.GetAddOnEnableState == nil and C_AddOns.GetAddOnEnableState then
+		-- NOTE: the argument order is swapped between the two:
+		-- old global: GetAddOnEnableState(character, addonIndexOrName)
+		-- new API:    C_AddOns.GetAddOnEnableState(addonIndexOrName, character)
+		_G.GetAddOnEnableState = function(character, addon)
+			return C_AddOns.GetAddOnEnableState(addon, character)
+		end
+	end
 	def("GetNumAddOns",        C_AddOns.GetNumAddOns)
 	def("IsAddOnLoaded",       C_AddOns.IsAddOnLoaded)
 	def("LoadAddOn",           C_AddOns.LoadAddOn)
