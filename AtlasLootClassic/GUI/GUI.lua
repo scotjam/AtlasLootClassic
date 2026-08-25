@@ -118,9 +118,13 @@ local function UpdateFrames(noPageUpdate, forceContentUpdate)
 	if moduleData[dataID].items[bossID].npcID and SoundData:GetNpcData(moduleData[dataID].items[bossID].npcID) then
 		GUI.SoundFrame.npcID = moduleData[dataID].items[bossID].npcID
 		contentFrame.soundsButton:Show()
+		contentFrame.contentPhaseButton:ClearAllPoints()
+		contentFrame.contentPhaseButton:SetPoint("RIGHT", contentFrame.soundsButton, "LEFT", -5, 0)
 	else
 		GUI.SoundFrame.npcID = nil
 		contentFrame.soundsButton:Hide()
+		contentFrame.contentPhaseButton:ClearAllPoints()
+		contentFrame.contentPhaseButton:SetPoint("RIGHT", contentFrame.modelButton, "LEFT", -5, 0)
 		if contentFrame.shownFrame == GUI.SoundFrame.frame then
 			contentFrame.shownFrame = nil
 			if GUI.SoundFrame.frame then
@@ -1427,9 +1431,11 @@ function GUI:Create()
 	-- Center
 	-- #####
 	frame.contentFrame.searchBox = CreateFrame("EditBox", frameName.."-SearchBox", frame.contentFrame, "SearchBoxTemplate")
-	frame.contentFrame.searchBox:SetWidth(150)
 	frame.contentFrame.searchBox:SetHeight(35)
-	frame.contentFrame.searchBox:SetPoint("CENTER", frame.contentFrame.downBG, "CENTER", 0, 0)
+	-- span between the prev-page button and the (leftmost) content phase button
+	-- so it can never overlap the right-aligned button row
+	frame.contentFrame.searchBox:SetPoint("LEFT", frame.contentFrame.downBG, "LEFT", 45, 0)
+	frame.contentFrame.searchBox:SetPoint("RIGHT", frame.contentFrame.contentPhaseButton, "LEFT", -10, 0)
 	frame.contentFrame.searchBox:SetAutoFocus(false)
 	frame.contentFrame.searchBox:SetMaxLetters(50)
 	frame.contentFrame.searchBox:SetScript("OnEnterPressed", SearchBoxOnEnter)
