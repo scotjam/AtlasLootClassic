@@ -1427,7 +1427,7 @@ function GUI:Create()
 	-- Center
 	-- #####
 	frame.contentFrame.searchBox = CreateFrame("EditBox", frameName.."-SearchBox", frame.contentFrame, "SearchBoxTemplate")
-	frame.contentFrame.searchBox:SetWidth(200)
+	frame.contentFrame.searchBox:SetWidth(150)
 	frame.contentFrame.searchBox:SetHeight(35)
 	frame.contentFrame.searchBox:SetPoint("CENTER", frame.contentFrame.downBG, "CENTER", 0, 0)
 	frame.contentFrame.searchBox:SetAutoFocus(false)
