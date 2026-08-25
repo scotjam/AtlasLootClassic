@@ -157,6 +157,9 @@ function ItemFrame:Refresh(skipProtect)
 	LastRefresh = GetTime()
 
 	ItemFrame:ClearItems()
+	-- incomplete selection (e.g. restored from saved variables of another
+	-- version, or nothing picked yet): nothing to refresh
+	if not (AtlasLoot.db.GUI.selected[1] and AtlasLoot.db.GUI.selected[2] and AtlasLoot.db.GUI.selected[3]) then return end
 	AtlasLoot.db.GUI.selected[5] = AtlasLoot.db.GUI.selected[5] or 0
 	ItemFrame.nextPage = nil
 	local page = AtlasLoot.db.GUI.selected[5] * 100 -- Page number for first items on a page are <1, 101, 201, 301, 401, ...>
