@@ -1478,7 +1478,9 @@ function GUI:Create()
 	frame.contentFrame.clasFilterButton:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 	frame.contentFrame.clasFilterButton:SetWidth(25)
 	frame.contentFrame.clasFilterButton:SetHeight(25)
-	frame.contentFrame.clasFilterButton:SetPoint("LEFT", frame.contentFrame.itemsButton, "RIGHT", 5, 0)
+	-- anchored to the prev page button (the items button moved to the right
+	-- side of the bar, next to the model button)
+	frame.contentFrame.clasFilterButton:SetPoint("LEFT", frame.contentFrame.prevPageButton, "RIGHT", 5, 0)
 	frame.contentFrame.clasFilterButton:SetScript("OnClick", ClassFilterButton_OnClick)
 	frame.contentFrame.clasFilterButton:SetScript("OnShow", ClassFilterButton_OnShow)
 	frame.contentFrame.clasFilterButton:SetScript("OnEnter", ClassFilterButton_OnEnter)
