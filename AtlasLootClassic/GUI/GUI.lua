@@ -45,6 +45,15 @@ local function OnFavouritesAddonLoad(addon, enabled)
 	Favourites = enabled and addon or nil
 end
 
+-- grey out the button of the view (items / model / sounds) that is active
+local function UpdateViewButtonStates()
+	local contentFrame = GUI.frame.contentFrame
+	local shown = contentFrame.shownFrame
+	contentFrame.itemsButton:SetEnabled(not (shown and GUI.ItemFrame and shown == GUI.ItemFrame.frame))
+	contentFrame.modelButton:SetEnabled(not (shown and GUI.ModelFrame and shown == GUI.ModelFrame.frame))
+	contentFrame.soundsButton:SetEnabled(not (shown and GUI.SoundFrame and shown == GUI.SoundFrame.frame))
+end
+
 local function UpdateFrames(noPageUpdate, forceContentUpdate)
 	local moduleData = AtlasLoot.ItemDB:Get(db.selected[1])
 	if not moduleData then return end
@@ -148,6 +157,8 @@ local function UpdateFrames(noPageUpdate, forceContentUpdate)
 	else
 		contentFrame.searchBox:Hide()
 	end
+
+	UpdateViewButtonStates()
 
 	--[[ AtlasMapID
 	if AtlasLoot.AtlasIntegration and (AtlasLoot.AtlasIntegration.IsEnabled() and moduleData[dataID].AtlasMapID and AtlasLoot.AtlasIntegration.GetAtlasZoneData(moduleData[dataID].AtlasMapID)) then
@@ -1454,9 +1465,12 @@ function GUI:Create()
 	frame.contentFrame.prevPageButton.typ = "prev"
 
 	frame.contentFrame.itemsButton = GUI.CreateButton()
-	frame.contentFrame.itemsButton:SetPoint("LEFT", frame.contentFrame.prevPageButton, "RIGHT", 5, 0)
+	frame.contentFrame.itemsButton:SetPoint("RIGHT", frame.contentFrame.modelButton, "LEFT", -5, 0)
 	frame.contentFrame.itemsButton:SetText(AL["Items"])
 	frame.contentFrame.itemsButton:SetScript("OnClick", ItemButtonOnClick)
+	-- the sounds button moves left of the items button (it was anchored where
+	-- the items button now sits)
+	frame.contentFrame.soundsButton:SetPoint("RIGHT", frame.contentFrame.itemsButton, "LEFT", -5, 0)
 
 	-- Class Filter
 	frame.contentFrame.clasFilterButton = CreateFrame("Button", frameName.."-clasFilterButton")
