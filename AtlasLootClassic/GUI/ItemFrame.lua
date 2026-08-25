@@ -110,7 +110,10 @@ function ItemFrame.UpdateFilterItem(buttonID, reset)
 		local text = button.RawName or button.name:GetText()
 		if text and not sfind(slower(text), ItemFrame.SearchString, 1, true) then
 			button:SetAlpha(FILTER_ALPHA)
-		elseif reset then
+		elseif not AtlasLoot.db.GUI.classFilter then
+			-- always restore matches, otherwise buttons dimmed by a previous
+			-- search string stay dimmed when the search text changes
+			-- (with the class filter active its branch above set the alpha)
 			button:SetAlpha(1.0)
 		end
 		reset = false
